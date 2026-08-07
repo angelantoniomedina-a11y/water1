@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório Executivo: Gestão Estratégica da Água</title>
-    <!-- Chart.js para Gráficos Profissionais -->
+    <title>Painel Executivo: Gestão Hídrica e Sustentabilidade</title>
+    <!-- Chart.js para Gráficos Dinâmicos -->
     <script src="https://jsdelivr.net"></script>
     <style>
         :root {
@@ -16,6 +16,9 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border: #e2e8f0;
+            --green-wf: #2e7d32;
+            --blue-wf: #1565c0;
+            --gray-wf: #757575;
         }
 
         body {
@@ -24,17 +27,16 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        /* Layout Administrativo (Sidebar + Main) */
         .wrapper {
             display: flex;
             min-height: 100vh;
         }
 
         sidebar {
-            width: 260px;
+            width: 280px;
             background-color: var(--primary);
             color: white;
             padding: 2rem 1.5rem;
@@ -42,7 +44,7 @@
         }
 
         sidebar h2 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -62,7 +64,7 @@
             color: rgba(255,255,255,0.7);
             text-align: left;
             padding: 0.75rem 1rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             border-radius: 6px;
             transition: all 0.2s;
@@ -102,7 +104,6 @@
             color: var(--text-muted);
         }
 
-        /* KPIs / Tarjetas de Datos */
         .kpi-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -115,7 +116,6 @@
             padding: 1.5rem;
             border-radius: 8px;
             border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
         .kpi-title {
@@ -134,10 +134,9 @@
 
         .kpi-sub {
             font-size: 0.8rem;
-            color: var(--accent);
+            color: var(--text-muted);
         }
 
-        /* Contenido de pestañas */
         .tab-content {
             display: none;
         }
@@ -148,8 +147,15 @@
 
         .grid-2x1 {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1.8fr 1.2fr;
             gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 2.5rem;
         }
 
@@ -164,10 +170,17 @@
             border: 1px solid var(--border);
             padding: 1.5rem;
             border-radius: 8px;
-            min-height: 300px;
+            min-height: 320px;
         }
 
         .info-box {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .card-block {
             background: var(--panel-bg);
             border: 1px solid var(--border);
             padding: 1.5rem;
@@ -182,78 +195,98 @@
             padding-bottom: 0.5rem;
         }
 
-        ul {
+        ul, ol {
             padding-left: 1.25rem;
-            color: var(--text-main);
         }
 
         li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: #ffeaea;
-            color: #d32f2f;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
+        .badge-danger { background: #ffeaea; color: #d32f2f; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .badge-success { background: #e8f5e9; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        
+        .wf-box { border-top: 4px solid var(--primary); }
+        .wf-green { border-top-color: var(--green-wf); }
+        .wf-blue { border-top-color: var(--blue-wf); }
+        .wf-gray { border-top-color: var(--gray-wf); }
+
+        .qa-item {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+        }
+        .qa-question {
+            padding: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+        }
+        .qa-answer {
+            padding: 0 1rem 1rem 1rem;
+            color: #475569;
+            display: none;
+            border-top: 1px solid var(--bg-main);
+            padding-top: 0.5rem;
         }
     </style>
 </head>
 <body>
 
     <div class="wrapper">
-        <!-- BARRA LATERAL CORPORATIVA -->
+        <!-- BARRA LATERAL -->
         <sidebar>
             <h2>Painel Hídrico</h2>
             <nav class="nav-menu">
-                <button class="nav-btn active" onclick="openTab(event, 'matematica')">📊 Matemática & Custos</button>
-                <button class="nav-btn" onclick="openTab(event, 'quimica')">🧪 Química & Qualidade</button>
-                <button class="nav-btn" onclick="openTab(event, 'biologia')">🌿 Biologia & Ecossistema</button>
+                <button class="nav-btn active" onclick="openTab(event, 'matematica')">📊 Matemática & Gastos</button>
+                <button class="nav-btn" onclick="openTab(event, 'quimica')">🧪 Química & Pegada</button>
+                <button class="nav-btn" onclick="openTab(event, 'biologia')">🌿 Biologia & Poluição</button>
+                <button class="nav-btn" onclick="openTab(event, 'auditoria')">📋 Banco de Questões</button>
             </nav>
         </sidebar>
 
-        <!-- CONTENIDO PRINCIPAL -->
+        <!-- CONTEÚDO PRINCIPAL -->
         <main>
             <header>
-                <h1 id="page-title">Relatório de Gestão: Matemática & Custos</h1>
-                <p>Indicadores estratégicos e análise de impacto para tomada de decisão.</p>
+                <h1 id="page-title">Matemática: Mapeamento de Consumo Oculto</h1>
+                <p id="page-desc">Análise quantitativa do uso da água, vazamentos ocultos e infraestrutura tecnológica.</p>
             </header>
 
             <!-- SEÇÃO MATEMÁTICA -->
             <div id="matematica" class="tab-content active">
-                <!-- Tarjetas KPI -->
                 <div class="kpi-container">
                     <div class="kpi-card">
-                        <div class="kpi-title">Vazamento por Gota/Seg</div>
+                        <div class="kpi-title">Vazamento (1 gota/seg)</div>
                         <div class="kpi-value">1.380 L</div>
-                        <div class="kpi-sub">Desperdício Mensal / Ponto</div>
+                        <div class="kpi-sub">Desperdício mensal por ponto</div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-title">Pegada ChatGPT (Prompt)</div>
+                        <div class="kpi-title">Pegada ChatGPT</div>
                         <div class="kpi-value">500 ml</div>
                         <div class="kpi-sub">A cada 20-50 comandos</div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-title">Meta de Redução Operacional</div>
-                        <div class="kpi-value">- 25%</div>
-                        <div class="kpi-sub">Alvo com Data Centers Verdes</div>
+                        <div class="kpi-title">Consumo Agro no Brasil</div>
+                        <div class="kpi-value">70% - 80%</div>
+                        <div class="kpi-sub">Do total de água doce do país</div>
                     </div>
                 </div>
 
                 <div class="grid-2x1">
                     <div class="chart-box">
-                        <h3>Projeção de Desperdício Oculto (Infraestrutura vs IA)</h3>
+                        <h3>Mapeamento de Consumo Nacional e Tecnológico</h3>
                         <canvas id="mathChart"></canvas>
                     </div>
                     <div class="info-box">
-                        <h3>Plano de Mitigação de Riscos</h3>
+                        <h3>Como Reduzir esses Gastos?</h3>
                         <ul>
-                            <li><strong>Auditoria de Redes:</strong> Implementação de algoritmos matemáticos com sensores de fluxo para deter vazamentos residenciais e industriais.</li>
-                            <li><strong>Eficiência em IA:</strong> Otimização de requisições de código internos para reduzir o estresse térmico em servidores corporativos.</li>
-                            <li><strong>Infraestrutura Fechada:</strong> Migração de serviços cloud para data centers com resfriamento líquido de ciclo fechado (zero evaporação).</li>
+                            <li><strong>Otimização de Algoritmos:</strong> Códigos eficientes exigem menos processamento e mitigam o estresse térmico em servidores.</li>
+                            <li><strong>Data Centers Sustentáveis:</strong> Infraestrutura em regiões frias ou sistemas de resfriamento líquido em circuito fechado.</li>
+                            <li><strong>Uso Consciente da IA:</strong> Moderação e eliminação de comandos redundantes em modelos de linguagem complexos.</li>
+                            <li><strong>Manutenção Preventiva:</strong> Monitoramento matemático automatizado via sensores de fluxo para contenção imediata de vazamentos de infraestrutura.</li>
                         </ul>
                     </div>
                 </div>
@@ -261,31 +294,9 @@
 
             <!-- SEÇÃO QUÍMICA -->
             <div id="quimica" class="tab-content">
-                <div class="grid-2x1">
-                    <div class="chart-box">
-                        <h3>Eficiência de Processos Químicos de Purificação</h3>
-                        <canvas id="chemChart"></canvas>
-                    </div>
-                    <div class="info-box">
-                        <h3>Indicadores de Qualidade H2O</h3>
-                        <p>A água como solvente universal absorve contaminantes críticos rapidamente. O controle químico foca em:</p>
-                        <ul>
-                            <li><strong>Coagulação e Floculação:</strong> Eliminação de 95% de resíduos insolúveis em suspensão.</li>
-                            <li><strong>Controle de pH:</strong> Neutralização essencial para evitar a corrosão das tubulações de distribuição.</li>
-                            <li><strong>Fórmula Padrão:</strong> Monitoramento estrito do cloro residual para garantir a eliminação biológica no transporte.</li>
-                        </ul>
-                    </div>
+                <div class="info-box" style="margin-bottom: 2rem;">
+                    <h3>Conceito: Pegada Hídrica</h3>
+                    <p>A pegada hídrica é a quantidade de água utilizada para produzir um produto, alimento ou prestar um serviço. Ela nos ajuda a entender o impacto do consumo de água e incentiva práticas mais sustentáveis.</p>
                 </div>
-            </div>
 
-            <!-- SEÇÃO BIOLOGIA -->
-            <div id="biologia" class="tab-content">
-                <div class="grid-2x1">
-                    <div class="chart-box">
-                        <h3>Impacto dos Poluentes no Ciclo Biológico (% Destruição)</h3>
-                        <canvas id="bioChart"></canvas>
-                    </div>
-                    <div class="info-box">
-                        <h3>Ameaças ao Ciclo Hidrológico</h3>
-                        <ul>
-                            <li><span class="badge">Chuva Ácida</span> Reação atmosférica com gases NOx/SOx alterando o pH biológico do solo.</li>
+                <div class="grid-3col">
