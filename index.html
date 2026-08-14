@@ -1,302 +1,1277 @@
-<!DOCTYPE html>
+preservacao-da-agua/
+│
+├── index.html
+├── style.css
+├── script.js
+│
+└── imagens/
+    └── README.txt
+    <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Executivo: Gestão Hídrica e Sustentabilidade</title>
-    <!-- Chart.js para Gráficos Dinâmicos -->
-    <script src="https://jsdelivr.net"></script>
-    <style>
-        :root {
-            --bg-main: #f8fafc;
-            --panel-bg: #ffffff;
-            --primary: #1e3a8a;
-            --secondary: #0d9488;
-            --accent: #ea580c;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --green-wf: #2e7d32;
-            --blue-wf: #1565c0;
-            --gray-wf: #757575;
-        }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        .wrapper {
-            display: flex;
-            min-height: 100vh;
-        }
+    <meta
+        name="description"
+        content="Projeto acadêmico sobre preservação da água, poluição, pegada hídrica e uso sustentável."
+    >
 
-        sidebar {
-            width: 280px;
-            background-color: var(--primary);
-            color: white;
-            padding: 2rem 1.5rem;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
-        }
+    <title>Preservação da Água | TCC</title>
 
-        sidebar h2 {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 1rem;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-        .nav-btn {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.7);
-            text-align: left;
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-        .nav-btn:hover, .nav-btn.active {
-            color: white;
-            background-color: rgba(255,255,255,0.1);
-        }
-
-        .nav-btn.active {
-            border-left: 4px solid var(--secondary);
-            background-color: rgba(255,255,255,0.15);
-        }
-
-        main {
-            flex: 1;
-            padding: 2rem 3rem;
-            max-width: 1200px;
-        }
-
-        header {
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1.5rem;
-        }
-
-        header h1 {
-            margin: 0;
-            color: var(--primary);
-            font-size: 2rem;
-        }
-
-        header p {
-            margin: 0.5rem 0 0 0;
-            color: var(--text-muted);
-        }
-
-        .kpi-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .kpi-card {
-            background: var(--panel-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .kpi-title {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .kpi-value {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 0.5rem 0;
-        }
-
-        .kpi-sub {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .grid-2x1 {
-            display: grid;
-            grid-template-columns: 1.8fr 1.2fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .grid-3col {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        @media (max-width: 900px) {
-            .grid-2x1 { grid-template-columns: 1fr; }
-            .wrapper { flex-direction: column; }
-            sidebar { width: 100%; box-sizing: border-box; }
-        }
-
-        .chart-box {
-            background: var(--panel-bg);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 8px;
-            min-height: 320px;
-        }
-
-        .info-box {
-            background: var(--panel-bg);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 8px;
-        }
-
-        .card-block {
-            background: var(--panel-bg);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 8px;
-        }
-
-        h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.2rem;
-            border-bottom: 2px solid var(--bg-main);
-            padding-bottom: 0.5rem;
-        }
-
-        ul, ol {
-            padding-left: 1.25rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-
-        .badge-danger { background: #ffeaea; color: #d32f2f; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        .badge-success { background: #e8f5e9; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        
-        .wf-box { border-top: 4px solid var(--primary); }
-        .wf-green { border-top-color: var(--green-wf); }
-        .wf-blue { border-top-color: var(--blue-wf); }
-        .wf-gray { border-top-color: var(--gray-wf); }
-
-        .qa-item {
-            background: var(--panel-bg);
-            border: 1px solid var(--border);
-            margin-bottom: 0.5rem;
-            border-radius: 6px;
-        }
-        .qa-question {
-            padding: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: space-between;
-        }
-        .qa-answer {
-            padding: 0 1rem 1rem 1rem;
-            color: #475569;
-            display: none;
-            border-top: 1px solid var(--bg-main);
-            padding-top: 0.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="wrapper">
-        <!-- BARRA LATERAL -->
-        <sidebar>
-            <h2>Painel Hídrico</h2>
-            <nav class="nav-menu">
-                <button class="nav-btn active" onclick="openTab(event, 'matematica')">📊 Matemática & Gastos</button>
-                <button class="nav-btn" onclick="openTab(event, 'quimica')">🧪 Química & Pegada</button>
-                <button class="nav-btn" onclick="openTab(event, 'biologia')">🌿 Biologia & Poluição</button>
-                <button class="nav-btn" onclick="openTab(event, 'auditoria')">📋 Banco de Questões</button>
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header" id="header">
+
+        <div class="container nav-container">
+
+            <a href="#inicio" class="logo">
+                <span class="logo-icon">
+                    <i class="fa-solid fa-droplet"></i>
+                </span>
+
+                <span>
+                    Água<span class="logo-highlight">Viva</span>
+                </span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <nav class="nav" id="nav">
+
+                <a href="#inicio">Início</a>
+                <a href="#poluicao">Poluição</a>
+                <a href="#pegada">Pegada Hídrica</a>
+                <a href="#brasil">Brasil</a>
+                <a href="#desperdicio">Desperdício</a>
+                <a href="#quiz">Quiz</a>
+
             </nav>
-        </sidebar>
 
-        <!-- CONTEÚDO PRINCIPAL -->
-        <main>
-            <header>
-                <h1 id="page-title">Matemática: Mapeamento de Consumo Oculto</h1>
-                <p id="page-desc">Análise quantitativa do uso da água, vazamentos ocultos e infraestrutura tecnológica.</p>
-            </header>
+        </div>
 
-            <!-- SEÇÃO MATEMÁTICA -->
-            <div id="matematica" class="tab-content active">
-                <div class="kpi-container">
-                    <div class="kpi-card">
-                        <div class="kpi-title">Vazamento (1 gota/seg)</div>
-                        <div class="kpi-value">1.380 L</div>
-                        <div class="kpi-sub">Desperdício mensal por ponto</div>
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-content">
+
+                <div class="hero-text reveal">
+
+                    <span class="eyebrow">
+                        <i class="fa-solid fa-leaf"></i>
+                        Projeto de TCC • Educação Ambiental
+                    </span>
+
+                    <h1>
+                        Preservação
+                        <span>da Água</span>
+                    </h1>
+
+                    <p>
+                        Poluição, pegada hídrica e uso sustentável:
+                        compreender hoje para preservar o futuro.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a href="#poluicao" class="btn btn-primary">
+                            Conhecer o projeto
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+
+                        <a href="#quiz" class="btn btn-outline">
+                            Fazer o quiz
+                            <i class="fa-solid fa-circle-question"></i>
+                        </a>
+
                     </div>
-                    <div class="kpi-card">
-                        <div class="kpi-title">Pegada ChatGPT</div>
-                        <div class="kpi-value">500 ml</div>
-                        <div class="kpi-sub">A cada 20-50 comandos</div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-title">Consumo Agro no Brasil</div>
-                        <div class="kpi-value">70% - 80%</div>
-                        <div class="kpi-sub">Do total de água doce do país</div>
-                    </div>
+
                 </div>
 
-                <div class="grid-2x1">
-                    <div class="chart-box">
-                        <h3>Mapeamento de Consumo Nacional e Tecnológico</h3>
-                        <canvas id="mathChart"></canvas>
+
+                <div class="hero-card reveal">
+
+                    <div class="water-drop">
+                        <i class="fa-solid fa-droplet"></i>
                     </div>
-                    <div class="info-box">
-                        <h3>Como Reduzir esses Gastos?</h3>
-                        <ul>
-                            <li><strong>Otimização de Algoritmos:</strong> Códigos eficientes exigem menos processamento e mitigam o estresse térmico em servidores.</li>
-                            <li><strong>Data Centers Sustentáveis:</strong> Infraestrutura em regiões frias ou sistemas de resfriamento líquido em circuito fechado.</li>
-                            <li><strong>Uso Consciente da IA:</strong> Moderação e eliminação de comandos redundantes em modelos de linguagem complexos.</li>
-                            <li><strong>Manutenção Preventiva:</strong> Monitoramento matemático automatizado via sensores de fluxo para contenção imediata de vazamentos de infraestrutura.</li>
-                        </ul>
+
+                    <h3>Água é vida</h3>
+
+                    <p>
+                        Preservar os recursos hídricos é proteger
+                        pessoas, animais, plantas e futuras gerações.
+                    </p>
+
+                    <div class="hero-stat">
+
+                        <div>
+                            <strong>70–80%</strong>
+                            <span>aprox. do consumo de água no Brasil associado à agropecuária</span>
+                        </div>
+
                     </div>
+
                 </div>
+
             </div>
 
-            <!-- SEÇÃO QUÍMICA -->
-            <div id="quimica" class="tab-content">
-                <div class="info-box" style="margin-bottom: 2rem;">
-                    <h3>Conceito: Pegada Hídrica</h3>
-                    <p>A pegada hídrica é a quantidade de água utilizada para produzir um produto, alimento ou prestar um serviço. Ela nos ajuda a entender o impacto do consumo de água e incentiva práticas mais sustentáveis.</p>
+            <div class="scroll-indicator">
+                <span>Explore o projeto</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             INTRODUÇÃO
+        ========================== -->
+
+        <section class="intro section">
+
+            <div class="container">
+
+                <div class="intro-grid">
+
+                    <div class="intro-text reveal">
+
+                        <span class="section-tag">
+                            <i class="fa-solid fa-water"></i>
+                            Por que falar sobre água?
+                        </span>
+
+                        <h2>
+                            Um recurso essencial
+                            <span>para toda a vida.</span>
+                        </h2>
+
+                        <p>
+                            A água é um dos recursos naturais mais importantes
+                            do planeta. Ela é indispensável para a vida humana,
+                            para os animais, para as plantas e para o funcionamento
+                            dos ecossistemas.
+                        </p>
+
+                        <p>
+                            Porém, a poluição, o desperdício e o uso inadequado
+                            dos recursos hídricos representam desafios cada vez
+                            maiores para a sociedade.
+                        </p>
+
+                        <div class="intro-highlight">
+
+                            <i class="fa-solid fa-lightbulb"></i>
+
+                            <div>
+                                <strong>Você sabia?</strong>
+                                <p>
+                                    Nossas escolhas diárias também influenciam
+                                    a quantidade e a qualidade da água utilizada.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="intro-visual reveal">
+
+                        <div class="water-orb orb-one"></div>
+                        <div class="water-orb orb-two"></div>
+
+                        <div class="visual-center">
+
+                            <i class="fa-solid fa-earth-americas"></i>
+
+                            <span>
+                                Preservar
+                                <br>
+                                é transformar
+                            </span>
+
+                        </div>
+
+                        <div class="floating-card floating-one">
+                            <i class="fa-solid fa-seedling"></i>
+                            <span>Natureza</span>
+                        </div>
+
+                        <div class="floating-card floating-two">
+                            <i class="fa-solid fa-recycle"></i>
+                            <span>Sustentabilidade</span>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="grid-3col">
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             POLUIÇÃO
+        ========================== -->
+
+        <section class="section section-dark" id="poluicao">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <span class="section-tag light">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Seção 01
+                    </span>
+
+                    <h2>
+                        Poluição da
+                        <span>Água</span>
+                    </h2>
+
+                    <p>
+                        Um dos maiores problemas ambientais do mundo.
+                    </p>
+
+                </div>
+
+
+                <div class="info-box reveal">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-water"></i>
+                    </div>
+
+                    <div>
+                        <p>
+                            A poluição da água acontece quando rios, lagos,
+                            mares, oceanos e águas subterrâneas são contaminados
+                            por lixo, esgoto, produtos químicos e outras
+                            substâncias prejudiciais.
+                        </p>
+
+                        <p>
+                            Essa contaminação compromete a qualidade da água
+                            e coloca em risco a saúde das pessoas, dos animais
+                            e das plantas.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="cards-grid causes-grid">
+
+                    <article class="cause-card reveal">
+
+                        <div class="card-icon red">
+                            <i class="fa-solid fa-toilet"></i>
+                        </div>
+
+                        <h3>Esgoto sem tratamento</h3>
+
+                        <p>
+                            O lançamento de esgoto sem tratamento pode
+                            contaminar rios e outros corpos d'água.
+                        </p>
+
+                    </article>
+
+
+                    <article class="cause-card reveal">
+
+                        <div class="card-icon orange">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+
+                        <h3>Lixo</h3>
+
+                        <p>
+                            Resíduos descartados incorretamente chegam
+                            a rios, córregos, lagos e praias.
+                        </p>
+
+                    </article>
+
+
+                    <article class="cause-card reveal">
+
+                        <div class="card-icon purple">
+                            <i class="fa-solid fa-industry"></i>
+                        </div>
+
+                        <h3>Resíduos industriais</h3>
+
+                        <p>
+                            Produtos químicos e outros resíduos podem
+                            afetar a qualidade dos recursos hídricos.
+                        </p>
+
+                    </article>
+
+
+                    <article class="cause-card reveal">
+
+                        <div class="card-icon yellow">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
+
+                        <h3>Agrotóxicos</h3>
+
+                        <p>
+                            O uso excessivo de agrotóxicos e fertilizantes
+                            pode contribuir para a contaminação da água.
+                        </p>
+
+                    </article>
+
+
+                    <article class="cause-card reveal">
+
+                        <div class="card-icon black">
+                            <i class="fa-solid fa-oil-can"></i>
+                        </div>
+
+                        <h3>Petróleo e combustíveis</h3>
+
+                        <p>
+                            Derramamentos podem causar impactos significativos
+                            em ecossistemas aquáticos.
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <div class="consequence-section">
+
+                    <div class="mini-heading reveal">
+                        <span>Consequências</span>
+                        <h3>Quando a água é contaminada, todos sofrem.</h3>
+                    </div>
+
+
+                    <div class="consequence-grid">
+
+                        <div class="consequence reveal">
+                            <i class="fa-solid fa-fish"></i>
+                            <span>Morte de animais aquáticos</span>
+                        </div>
+
+                        <div class="consequence reveal">
+                            <i class="fa-solid fa-glass-water"></i>
+                            <span>Contaminação da água potável</span>
+                        </div>
+
+                        <div class="consequence reveal">
+                            <i class="fa-solid fa-virus"></i>
+                            <span>Aumento de doenças</span>
+                        </div>
+
+                        <div class="consequence reveal">
+                            <i class="fa-solid fa-tree"></i>
+                            <span>Destruição dos ecossistemas</span>
+                        </div>
+
+                        <div class="consequence reveal">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Prejuízos econômicos</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="solutions">
+
+                    <div class="mini-heading reveal">
+                        <span>O que podemos fazer?</span>
+                        <h3>Soluções para preservar a água.</h3>
+                    </div>
+
+
+                    <div class="solutions-grid">
+
+                        <div class="solution reveal">
+                            <span>01</span>
+                            <i class="fa-solid fa-faucet-drip"></i>
+                            <h3>Tratar o esgoto</h3>
+                            <p>Evitar o lançamento de esgoto sem tratamento.</p>
+                        </div>
+
+                        <div class="solution reveal">
+                            <span>02</span>
+                            <i class="fa-solid fa-recycle"></i>
+                            <h3>Descartar corretamente</h3>
+                            <p>Reduzir o descarte inadequado de resíduos.</p>
+                        </div>
+
+                        <div class="solution reveal">
+                            <span>03</span>
+                            <i class="fa-solid fa-bottle-water"></i>
+                            <h3>Reduzir plásticos</h3>
+                            <p>Diminuir o uso de plásticos descartáveis.</p>
+                        </div>
+
+                        <div class="solution reveal">
+                            <span>04</span>
+                            <i class="fa-solid fa-seedling"></i>
+                            <h3>Preservar nascentes</h3>
+                            <p>Proteger áreas importantes para os recursos hídricos.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PEGADA HÍDRICA
+        ========================== -->
+
+        <section class="section" id="pegada">
+
+            <div class="container">
+
+                <div class="section-heading centered reveal">
+
+                    <span class="section-tag">
+                        <i class="fa-solid fa-shoe-prints"></i>
+                        Seção 02
+                    </span>
+
+                    <h2>
+                        Pegada
+                        <span>Hídrica</span>
+                    </h2>
+
+                    <p>
+                        Entenda quanta água está envolvida naquilo que consumimos.
+                    </p>
+
+                </div>
+
+
+                <div class="footprint-intro reveal">
+
+                    <div class="footprint-number">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <p>
+                        A <strong>pegada hídrica</strong> representa a quantidade
+                        de água utilizada para produzir um produto, alimento
+                        ou realizar uma atividade.
+                    </p>
+
+                </div>
+
+
+                <div class="footprint-grid">
+
+                    <!-- VERDE -->
+
+                    <article class="footprint-card green-card reveal">
+
+                        <div class="footprint-top">
+
+                            <div class="footprint-icon">
+                                <i class="fa-solid fa-cloud-rain"></i>
+                            </div>
+
+                            <span>01</span>
+
+                        </div>
+
+                        <h3>Pegada Hídrica Verde</h3>
+
+                        <p>
+                            Representa a água da chuva armazenada no solo
+                            e utilizada pelas plantas durante seu crescimento.
+                        </p>
+
+                        <div class="example-title">
+                            Exemplos
+                        </div>
+
+                        <ul>
+                            <li><i class="fa-solid fa-check"></i> Milho</li>
+                            <li><i class="fa-solid fa-check"></i> Soja</li>
+                            <li><i class="fa-solid fa-check"></i> Café</li>
+                            <li><i class="fa-solid fa-check"></i> Plantações</li>
+                        </ul>
+
+                    </article>
+
+
+                    <!-- AZUL -->
+
+                    <article class="footprint-card blue-card reveal">
+
+                        <div class="footprint-top">
+
+                            <div class="footprint-icon">
+                                <i class="fa-solid fa-water"></i>
+                            </div>
+
+                            <span>02</span>
+
+                        </div>
+
+                        <h3>Pegada Hídrica Azul</h3>
+
+                        <p>
+                            Representa a água retirada de rios, lagos,
+                            reservatórios e aquíferos.
+                        </p>
+
+                        <div class="example-title">
+                            Exemplos
+                        </div>
+
+                        <ul>
+                            <li><i class="fa-solid fa-check"></i> Irrigação</li>
+                            <li><i class="fa-solid fa-check"></i> Indústrias</li>
+                            <li><i class="fa-solid fa-check"></i> Uso doméstico</li>
+                            <li><i class="fa-solid fa-check"></i> Reservatórios</li>
+                        </ul>
+
+                    </article>
+
+
+                    <!-- CINZA -->
+
+                    <article class="footprint-card gray-card reveal">
+
+                        <div class="footprint-top">
+
+                            <div class="footprint-icon">
+                                <i class="fa-solid fa-flask"></i>
+                            </div>
+
+                            <span>03</span>
+
+                        </div>
+
+                        <h3>Pegada Hídrica Cinza</h3>
+
+                        <p>
+                            Representa a quantidade de água necessária para
+                            diluir poluentes até níveis de qualidade aceitáveis.
+                        </p>
+
+                        <div class="example-title">
+                            Exemplos
+                        </div>
+
+                        <ul>
+                            <li><i class="fa-solid fa-check"></i> Indústrias</li>
+                            <li><i class="fa-solid fa-check"></i> Agricultura</li>
+                            <li><i class="fa-solid fa-check"></i> Esgoto</li>
+                            <li><i class="fa-solid fa-check"></i> Produtos químicos</li>
+                        </ul>
+
+                    </article>
+
+                </div>
+
+
+                <div class="comparison reveal">
+
+                    <div class="comparison-title">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        Três tipos de pegada hídrica
+                    </div>
+
+                    <div class="comparison-bars">
+
+                        <div class="bar-row">
+                            <div class="bar-label">
+                                <span class="dot green"></span>
+                                Verde
+                            </div>
+
+                            <div class="bar">
+                                <div class="bar-fill green-fill" style="width: 78%;"></div>
+                            </div>
+
+                            <strong>Chuva</strong>
+                        </div>
+
+
+                        <div class="bar-row">
+                            <div class="bar-label">
+                                <span class="dot blue"></span>
+                                Azul
+                            </div>
+
+                            <div class="bar">
+                                <div class="bar-fill blue-fill" style="width: 58%;"></div>
+                            </div>
+
+                            <strong>Superficial / subterrânea</strong>
+                        </div>
+
+
+                        <div class="bar-row">
+                            <div class="bar-label">
+                                <span class="dot gray"></span>
+                                Cinza
+                            </div>
+
+                            <div class="bar">
+                                <div class="bar-fill gray-fill" style="width: 40%;"></div>
+                            </div>
+
+                            <strong>Poluição</strong>
+                        </div>
+
+                    </div>
+
+                    <small>
+                        * Barras ilustrativas para fins educativos. Não representam
+                        proporções reais entre os três tipos.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             BRASIL
+        ========================== -->
+
+        <section class="section brazil-section" id="brasil">
+
+            <div class="container">
+
+                <div class="section-heading centered reveal">
+
+                    <span class="section-tag">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        Seção 03
+                    </span>
+
+                    <h2>
+                        Consumo de água
+                        <span>no Brasil</span>
+                    </h2>
+
+                    <p>
+                        A importância da gestão eficiente dos recursos hídricos.
+                    </p>
+
+                </div>
+
+
+                <div class="brazil-feature">
+
+                    <div class="brazil-content reveal">
+
+                        <span class="big-label">70–80%</span>
+
+                        <h3>
+                            Agropecuária e irrigação
+                        </h3>
+
+                        <p>
+                            A agropecuária é o principal setor consumidor
+                            de água no Brasil, com destaque para a irrigação
+                            na produção agrícola.
+                        </p>
+
+                        <p>
+                            Esse uso é essencial para a produção de alimentos,
+                            mas exige planejamento e tecnologias que reduzam
+                            desperdícios.
+                        </p>
+
+                    </div>
+
+
+                    <div class="brazil-chart reveal">
+
+                        <div class="chart-title">
+                            <span>Uso da água</span>
+                            <small>Representação ilustrativa</small>
+                        </div>
+
+                        <div class="donut-chart">
+
+                            <div class="donut-center">
+                                <strong>70–80%</strong>
+                                <span>agropecuária</span>
+                            </div>
+
+                        </div>
+
+                        <div class="chart-legend">
+
+                            <div>
+                                <span class="legend-color agricultural"></span>
+                                Agropecuária / irrigação
+                            </div>
+
+                            <div>
+                                <span class="legend-color other"></span>
+                                Outros usos
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="food-grid">
+
+                    <div class="food-item reveal">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                        <strong>Grãos</strong>
+                        <span>Produção agrícola</span>
+                    </div>
+
+                    <div class="food-item reveal">
+                        <i class="fa-solid fa-apple-whole"></i>
+                        <strong>Frutas</strong>
+                        <span>Cultivos agrícolas</span>
+                    </div>
+
+                    <div class="food-item reveal">
+                        <i class="fa-solid fa-carrot"></i>
+                        <strong>Hortaliças</strong>
+                        <span>Produção de alimentos</span>
+                    </div>
+
+                    <div class="food-item reveal">
+                        <i class="fa-solid fa-tractor"></i>
+                        <strong>Irrigação</strong>
+                        <span>Uso eficiente da água</span>
+                    </div>
+
+                </div>
+
+
+                <div class="sustainable-box reveal">
+
+                    <div class="sustainable-icon">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+
+                    <div>
+
+                        <span>Uso sustentável</span>
+
+                        <h3>
+                            Tecnologia e consciência podem reduzir desperdícios.
+                        </h3>
+
+                        <p>
+                            Sistemas de irrigação eficientes, planejamento,
+                            monitoramento e uso consciente dos recursos ajudam
+                            a preservar rios e aquíferos para as futuras gerações.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DESPERDÍCIO
+        ========================== -->
+
+        <section class="section" id="desperdicio">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <span class="section-tag">
+                        <i class="fa-solid fa-faucet-drip"></i>
+                        Seção 04
+                    </span>
+
+                    <h2>
+                        Desperdício e
+                        <span>contaminação</span>
+                    </h2>
+
+                    <p>
+                        Pequenas atitudes podem gerar grandes impactos.
+                    </p>
+
+                </div>
+
+
+                <div class="waste-grid">
+
+                    <div class="waste-text reveal">
+
+                        <p>
+                            Parte da água tratada pode ser perdida durante
+                            a distribuição devido a vazamentos, falhas de
+                            manutenção e problemas na infraestrutura de
+                            abastecimento.
+                        </p>
+
+                        <p>
+                            Também existe o problema da contaminação provocada
+                            pelo descarte inadequado de óleo de cozinha,
+                            medicamentos vencidos, produtos químicos e
+                            outros materiais.
+                        </p>
+
+                        <p>
+                            Esses contaminantes podem atingir rios, córregos
+                            e águas subterrâneas, prejudicando os ecossistemas
+                            e dificultando o tratamento da água.
+                        </p>
+
+                    </div>
+
+
+                    <div class="waste-items">
+
+                        <div class="waste-item reveal">
+
+                            <div class="waste-icon oil">
+                                <i class="fa-solid fa-oil-can"></i>
+                            </div>
+
+                            <div>
+                                <h3>Óleo de cozinha</h3>
+                                <p>
+                                    Não deve ser despejado no ralo.
+                                    Procure pontos de coleta.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="waste-item reveal">
+
+                            <div class="waste-icon medicine">
+                                <i class="fa-solid fa-pills"></i>
+                            </div>
+
+                            <div>
+                                <h3>Medicamentos vencidos</h3>
+                                <p>
+                                    Devem ser entregues em pontos de coleta
+                                    apropriados, como farmácias participantes.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="waste-item reveal">
+
+                            <div class="waste-icon chemical">
+                                <i class="fa-solid fa-flask"></i>
+                            </div>
+
+                            <div>
+                                <h3>Produtos químicos</h3>
+                                <p>
+                                    Devem receber descarte adequado para evitar
+                                    contaminação ambiental.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="waste-item reveal">
+
+                            <div class="waste-icon pipe">
+                                <i class="fa-solid fa-pipe-smoking"></i>
+                            </div>
+
+                            <div>
+                                <h3>Vazamentos</h3>
+                                <p>
+                                    A manutenção das redes é fundamental
+                                    para reduzir perdas de água.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tips-section">
+
+                    <div class="mini-heading reveal">
+                        <span>Atitudes sustentáveis</span>
+                        <h3>Como reduzir o consumo de água?</h3>
+                    </div>
+
+
+                    <div class="tips-grid">
+
+                        <div class="tip reveal">
+                            <span>01</span>
+                            <i class="fa-solid fa-faucet"></i>
+                            <h3>Feche a torneira</h3>
+                            <p>
+                                Evite deixar a água correndo enquanto escova
+                                os dentes ou realiza outras atividades.
+                            </p>
+                        </div>
+
+                        <div class="tip reveal">
+                            <span>02</span>
+                            <i class="fa-solid fa-shower"></i>
+                            <h3>Banhos mais curtos</h3>
+                            <p>
+                                Reduza o tempo de banho e evite desperdícios.
+                            </p>
+                        </div>
+
+                        <div class="tip reveal">
+                            <span>03</span>
+                            <i class="fa-solid fa-recycle"></i>
+                            <h3>Descarte corretamente</h3>
+                            <p>
+                                Encaminhe resíduos especiais aos locais
+                                adequados de coleta.
+                            </p>
+                        </div>
+
+                        <div class="tip reveal">
+                            <span>04</span>
+                            <i class="fa-solid fa-eye"></i>
+                            <h3>Observe vazamentos</h3>
+                            <p>
+                                Pequenos vazamentos também podem representar
+                                perdas significativas.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             QUIZ
+        ========================== -->
+
+        <section class="section quiz-section" id="quiz">
+
+            <div class="container">
+
+                <div class="section-heading centered light-heading reveal">
+
+                    <span class="section-tag light">
+                        <i class="fa-solid fa-gamepad"></i>
+                        Seção 05
+                    </span>
+
+                    <h2>
+                        Quiz
+                        <span>Educativo</span>
+                    </h2>
+
+                    <p>
+                        Teste seus conhecimentos sobre a preservação da água.
+                    </p>
+
+                </div>
+
+
+                <div class="quiz-card reveal">
+
+                    <div class="quiz-top">
+
+                        <div>
+                            <span id="questionNumber">
+                                Pergunta 1 de 5
+                            </span>
+
+                            <h3 id="question">
+                                O que é pegada hídrica?
+                            </h3>
+                        </div>
+
+                        <div class="quiz-score">
+                            <i class="fa-solid fa-star"></i>
+                            <span id="score">0</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-container">
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-fill"
+                                id="progress"
+                            ></div>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="answers"
+                        id="answers"
+                    ></div>
+
+
+                    <div class="quiz-feedback" id="feedback"></div>
+
+
+                    <button
+                        class="btn btn-primary quiz-button"
+                        id="nextButton"
+                        disabled
+                    >
+                        Próxima pergunta
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="quiz-result reveal"
+                    id="quizResult"
+                >
+
+                    <div class="result-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+
+                    <span>Resultado final</span>
+
+                    <h3 id="resultTitle">
+                        Parabéns!
+                    </h3>
+
+                    <div class="result-score">
+                        <strong id="finalScore">0</strong>
+                        <small>/ 5</small>
+                    </div>
+
+                    <p id="resultMessage">
+                        Você concluiu o quiz.
+                    </p>
+
+                    <button
+                        class="btn btn-primary"
+                        id="restartButton"
+                    >
+                        Refazer quiz
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONCLUSÃO
+        ========================== -->
+
+        <section class="conclusion section">
+
+            <div class="container">
+
+                <div class="conclusion-content reveal">
+
+                    <div class="conclusion-icon">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <span class="section-tag">
+                        Conclusão
+                    </span>
+
+                    <h2>
+                        Cuidar da água é
+                        <span>cuidar da vida.</span>
+                    </h2>
+
+                    <p>
+                        Conhecer a poluição da água, compreender a pegada
+                        hídrica e adotar hábitos sustentáveis são passos
+                        importantes para preservar os recursos naturais.
+                    </p>
+
+                    <p>
+                        A preservação da água depende da participação de todos:
+                        governos, empresas, instituições de ensino e sociedade.
+                        Pequenas atitudes podem contribuir para um futuro mais
+                        sustentável.
+                    </p>
+
+                    <a href="#inicio" class="btn btn-primary">
+                        Voltar ao início
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-grid">
+
+            <div class="footer-brand">
+
+                <a href="#inicio" class="logo">
+                    <span class="logo-icon">
+                        <i class="fa-solid fa-droplet"></i>
+                    </span>
+
+                    Água<span class="logo-highlight">Viva</span>
+                </a>
+
+                <p>
+                    Projeto acadêmico de educação ambiental sobre
+                    preservação dos recursos hídricos.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>Navegação</h3>
+
+                <a href="#poluicao">Poluição</a>
+                <a href="#pegada">Pegada Hídrica</a>
+                <a href="#brasil">Brasil</a>
+                <a href="#desperdicio">Desperdício</a>
+                <a href="#quiz">Quiz</a>
+
+            </div>
+
+
+            <div class="footer-message">
+
+                <i class="fa-solid fa-leaf"></i>
+
+                <p>
+                    "Preservar hoje é garantir água amanhã."
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <div class="container">
+
+                <span>
+                    Projeto de TCC • Preservação da Água
+                </span>
+
+                <span>
+                    Feito com 💧 para a educação ambiental
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <button
+        class="back-top"
+        id="backTop"
+        aria-label="Voltar ao topo"
+    >
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
