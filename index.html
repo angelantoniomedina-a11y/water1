@@ -3,181 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCC - Preservação da Água</title>
-    <!-- CSS Nativo -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- Biblioteca de Ícones Avançados -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-</head>
-<body>
+    <title>TCC - Preservação da Água: Poluição, Pegada Hídrica e Uso Sustentável</title>
+    <style>
+        :root {
+            --primary-blue: #0A4D68;
+            --secondary-blue: #088395;
+            --light-blue: #EBF4F6;
+            --accent-green: #2D6A4F;
+            --accent-green-light: #52B788;
+            --gray-cinza: #6C757D;
+            --earth-brown: #A67C52;
+            --bg-light: #F4F9F4;
+            --text-dark: #212529;
+        }
 
-    <!-- Header & Sistema de Navegação -->
-    <header class="navbar">
-        <div class="logo">
-            <i class="fa-solid fa-droplet nav-drop-icon"></i> Conserve<span>Água</span>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#poluicao">Poluição</a></li>
-                <li><a href="#pegada">Pegada Hídrica</a></li>
-                <li><a href="#cenario">Cenário Nacional</a></li>
-                <li><a href="#quiz-section">Painel Interativo</a></li>
-            </ul>
-        </nav>
-        <button id="theme-switcher" class="theme-toggle-btn" aria-label="Mudar Modo Visual">
-            <i class="fa-solid fa-moon"></i>
-        </button>
-    </header>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    <!-- Seção Hero: Introdução de Alto Impacto -->
-    <section id="inicio" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-container">
-            <span class="badge">Apresentação de TCC</span>
-            <h1>Preservação da Água</h1>
-            <p>Uma análise profunda sobre poluição, a métrica da pegada hídrica e as diretrizes fundamentais para o uso sustentável.</p>
-            <div class="hero-actions">
-                <a href="#poluicao" class="btn-main btn-filled">Explorar Dados</a>
-                <a href="#quiz-section" class="btn-main btn-outline">Testar Conhecimentos</a>
-            </div>
-        </div>
-    </section>
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
 
-    <!-- Seção 1: Diagnóstico da Poluição da Água -->
-    <section id="poluicao" class="section container">
-        <div class="section-title">
-            <h2>Poluição da Água</h2>
-            <p>O maior e mais complexo desafio socioambiental do século</p>
-        </div>
+        /* --- MENU SUPERIOR --- */
+        header {
+            background-color: rgba(10, 77, 104, 0.95);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--earth-brown);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
-        <div class="editorial-block">
-            <p>A poluição acontece quando rios, lagos, mares, oceanos e águas subterrâneas são contaminados por lixo, esgoto, produtos químicos e outras substâncias prejudiciais. Essa contaminação severa compromete a qualidade da água disponível e coloca em risco iminente a saúde das pessoas, da fauna e da flora.</p>
-        </div>
+        header h1 {
+            color: white;
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+        }
 
-        <div class="grid-three-columns">
-            <!-- Bloco de Causas -->
-            <div class="feature-card border-left-danger">
-                <div class="card-header-icon color-danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                <h3>Principais Causas</h3>
-                <ul class="styled-list">
-                    <li>Despejo de esgoto sem tratamento.</li>
-                    <li>Lixo jogado de forma irregular em rios e praias.</li>
-                    <li>Resíduos industriais carregados de produtos químicos.</li>
-                    <li>Uso excessivo de agrotóxicos e fertilizantes agrícolas.</li>
-                    <li>Derramamentos catastróficos de petróleo e combustíveis.</li>
-                </ul>
-            </div>
+        header h1 span {
+            color: var(--accent-green-light);
+        }
 
-            <!-- Bloco de Consequências -->
-            <div class="feature-card border-left-warning">
-                <div class="card-header-icon color-warning"><i class="fa-solid fa-skull-crossbones"></i></div>
-                <h3>Consequências Críticas</h3>
-                <ul class="styled-list">
-                    <li>Morte massiva de peixes e animais aquáticos.</li>
-                    <li>Contaminação severa de reservatórios de água potável.</li>
-                    <li>Surto de doenças como cólera, diarreia e hepatite A.</li>
-                    <li>Destruição sistemática de ecossistemas aquáticos inteiros.</li>
-                    <li>Prejuízos profundos para a pesca, turismo e macroeconomia.</li>
-                </ul>
-            </div>
+        nav {
+            display: flex;
+            gap: 10px;
+        }
 
-            <!-- Bloco de Mitigação -->
-            <div class="feature-card border-left-success">
-                <div class="card-header-icon color-success"><i class="fa-solid fa-shield-halved"></i></div>
-                <h3>Como Evitar</h3>
-                <ul class="styled-list">
-                    <li>Tratar eficientemente o esgoto antes de lançá-lo aos corpos d'água.</li>
-                    <li>Zerar o descarte de lixo em ruas, rios, lagos e praias.</li>
-                    <li>Reduzir drasticamente a dependência de plásticos descartáveis.</li>
-                    <li>Utilizar produtos químicos e insumos de forma estritamente responsável.</li>
-                    <li>Fomentar a educação ambiental sistêmica e a preservação de nascentes.</li>
-                </ul>
-            </div>
-        </div>
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
 
-        <div class="conclusion-banner">
-            <p><strong>Conclusão Técnica:</strong> A água é um recurso finito e essencial para a vida. Cuidar dela é uma responsabilidade compartilhada por toda a sociedade civil, indústrias e governos. Com atitudes básicas coordenadas, garantimos a segurança hídrica para as gerações futuras.</p>
-        </div>
-    </section>
+        nav a:hover, nav a.active {
+            background-color: var(--secondary-blue);
+            color: white;
+        }
 
-    <!-- Seção 2: Desmistificando a Pegada Hídrica -->
-    <section id="pegada" class="section alt-bg">
-        <div class="container">
-            <div class="section-title">
-                <h2>A Métrica da Pegada Hídrica</h2>
-                <p>Compreendendo o volume real de água doce consumido no ciclo produtivo</p>
-            </div>
-            
-            <p class="section-intro">A pegada hídrica representa um indicador abrangente da apropriação de recursos hídricos. Ela contabiliza o volume total de água doce utilizado direta e indiretamente para produzir bens, alimentos ou fornecer serviços à humanidade.</p>
+        /* --- HERO SECTION --- */
+        .hero-slider {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
 
-            <div class="grid-three-columns dynamic-margin">
-                <!-- Card Verde -->
-                <div class="hydro-card pattern-green">
-                    <div class="hydro-icon"><i class="fa-solid fa-cloud-rain"></i></div>
-                    <h3>Pegada Hídrica Verde</h3>
-                    <p class="hydro-desc">É o volume de água da chuva que fica temporariamente armazenado no solo e é absorvido pelas plantas durante o seu ciclo natural de desenvolvimento.</p>
-                    <div class="hydro-examples">
-                        <span class="ex-badge">Milho</span>
-                        <span class="ex-badge">Soja</span>
-                        <span class="ex-badge">Café</span>
-                        <span class="ex-badge">Cultivos Agrícolas</span>
-                    </div>
-                </div>
+        .slider-bg {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%), 
+                        url('https://unsplash.com') no-repeat center center/cover;
+            z-index: 1;
+            transition: transform 0.1s ease-out;
+        }
 
-                <!-- Card Azul -->
-                <div class="hydro-card pattern-blue">
-                    <div class="hydro-icon"><i class="fa-solid fa-water"></i></div>
-                    <h3>Pegada Hídrica Azul</h3>
-                    <p class="hydro-desc">Refere-se ao volume de água doce captado de fontes superficiais ou subterrâneas (rios, lagos e aquíferos) que não retorna imediatamente à mesma bacia.</p>
-                    <div class="hydro-examples">
-                        <span class="ex-badge">Irrigação Artificial</span>
-                        <span class="ex-badge">Processamento Industrial</span>
-                        <span class="ex-badge">Abastecimento Doméstico</span>
-                    </div>
-                </div>
+        .slider-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 0 10%;
+            max-width: 900px;
+        }
 
-                <!-- Card Cinza -->
-                <div class="hydro-card pattern-gray">
-                    <div class="hydro-icon"><i class="fa-solid fa-vial-circle-check"></i></div>
-                    <h3>Pegada Hídrica Cinza</h3>
-                    <p class="hydro-desc">Representa o volume teórico de água necessária para diluir a carga de poluentes gerada em um processo produtivo até atingir os padrões técnicos de qualidade.</p>
-                    <div class="hydro-examples">
-                        <span class="ex-badge">Efluentes Industriais</span>
-                        <span class="ex-badge">Lixiviação de Defensivos</span>
-                        <span class="ex-badge">Redes de Esgoto</span>
-                    </div>
-                </div>
-            </div>
+        .slider-content h2 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
 
-            <div class="text-card-footer">
-                <p><i class="fa-solid fa-circle-info"></i> O monitoramento sistemático das pegadas hídricas corporativas e agrícolas é vital para balizar políticas públicas e guiar transições rumo à ecoeficiência industrial.</p>
-            </div>
-        </div>
-    </section>
+        .slider-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-left: 5px solid var(--secondary-blue);
+            border-radius: 0 10px 10px 0;
+        }
 
-    <!-- Seção 3: O Cenário de Consumo e Infraestrutura Hídrica no Brasil -->
-    <section id="cenario" class="section container">
-        <div class="section-title">
-            <h2>Gestão e Consumo no Brasil</h2>
-            <p>Dados de distribuição, desperdício e demandas setoriais</p>
-        </div>
+        /* --- CONTENEDORES DE CONTENIDO --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
 
-        <div class="split-dashboard">
-            <!-- Indicador Gráfico de Consumo -->
-            <div class="dashboard-visual">
-                <div class="radial-progress-box">
-                    <div class="circle-inner">
-                        <span class="percentage">70% - 80%</span>
-                        <span class="label">Demanda Agropecuária</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Detalhamento de Texto Técnico -->
-            <div class="dashboard-data">
-                <h3>O Maior Vetor de Consumo: Agricultura Irrigada</h3>
-                <p>A agricultura irrigada desponta como a principal consumidora de água doce no Brasil, concentrando entre <strong>70% e 80%</strong> de toda a água captada no país. Esse recurso é a base para a sustentação e escalabilidade da cadeia de alimentos, sendo direcionado majoritariamente para:</p>
-                
-                <div class="chips-container">
-                    <div class="data-chip"><i class="fa-solid fa-seedling"></i> Grãos</div>
+        .section-panel {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray-cinza);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* --- SEÇÃO 1: POLUIÇÃO DA ÁGUA --- */
+        .intro-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 35px;
+            border-left: 5px solid #C1121F;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card-list {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary-blue);
+        }
+
+        .card-list.causes { border-top-color: #E63946; }
+        .card-list.effects { border-top-color: #457B9D; }
+        .card-list.solutions { border-top-color: #2D6A4F; }
+
+        .card-list h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        .card-list ul {
+            list-style: none;
+        }
+
+        .card-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .card-list li::before {
+            content: "•";
+            position: absolute;
+            left: 5px;
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+        .causes li::before { color: #E63946; }
+        .effects li::before { color: #457B9D; }
+        .solutions li::before { color: #2D6A4F; }
+
+        /* --- SEÇÃO 2: PEGADA HÍDRICA --- */
+        .footprint-info {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            line-height: 1.6;
+        }
+
+        .footprint-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-bottom: 5px solid var(--gray-cinza);
+        }
+
+        .footprint-card.green { border-bottom-color: var(--accent-green); }
+        .footprint-card.blue { border-bottom-color: var(--secondary-blue); }
+        .footprint-card.gray { border-bottom-color: var(--gray-cinza); }
+
+        .footprint-header {
+            padding: 20px;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .footprint-card.green .footprint-header { background-color: var(--accent-green); }
+        .footprint-card.blue .footprint-header { background-color: var(--secondary-blue); }
+        .footprint-card.gray .footprint-header { background-color: var(--gray-cinza); }
+
+        .footprint-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .footprint-body p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+
+        .examples-box {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .examples-box strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary-blue);
+        }
+
+        /* --- SEÇÃO 3: CONSUMO NO BRASIL --- */
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+            margin-bottom: 35px;
+        }
+
+        .highlight-text-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-green-light);
+        }
+
+        .highlight-text-box h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .highlight-text-box p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .chart-card h4 {
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+
+        /* Donut Chart NATIVO usando SVG */
+        .donut-chart {
+            transform: rotate(-90deg);
+        }
+
+        .double-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .alert-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid #C1121F;
+        }
+
+        .alert-card.warn {
+            border-top-color: var(--earth-brown);
+        }
+
+        .alert-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        .alert-card p {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #495057;
+        }
+
